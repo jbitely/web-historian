@@ -1,5 +1,6 @@
 archives/*
 archives/*.txt
+scratch.txt
 
 ###OSX###
 
@@ -37,3 +38,4 @@ node_modules
 .floobit
 .floo
 .flooignore
+
