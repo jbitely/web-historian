@@ -18,6 +18,9 @@ var routes = {
   },
   '/styles.css': function(req, res) {
     httpHelpers.getAssets(res, 'static', '/styles.css');
+  },
+  '/archive': function(req, res) {
+    console.log('WOOHOO');
   }
 };
 
