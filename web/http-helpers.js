@@ -21,7 +21,7 @@ exports.getAssets = function(res, type, asset){ // TODO: possibly move into serv
   } else if (type === 'archive') {
     // do something else
   }
-  asset = type + asset;// path join /index.html
+  asset = type + "/" + asset;// path join /index.html
   var ext = path.extname(asset);
   if(ext){
     if(exports.fileTypes[ext]){

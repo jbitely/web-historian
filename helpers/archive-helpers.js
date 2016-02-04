@@ -12,7 +12,8 @@ var _ = require('underscore');
 exports.paths = {
   siteAssets: path.join(__dirname, '../web/public'),
   archivedSites: path.join(__dirname, '../archives/sites'),
-  list: path.join(__dirname, '../archives/sites.txt')
+  list: path.join(__dirname, '../archives/sites.txt'),
+  archived: path.join(__dirname, '../archives/archived.txt')
 };
 
 // Used for stubbing paths for tests, do not modify
@@ -27,7 +28,8 @@ exports.initialize = function(pathsObj){
 
 exports.readListOfUrls = function(listType, callback){ // TODO: implment list type checking
   var list = "";
-  fs.readFile(exports.paths.list, function(err, data){
+  var filePath = listType === "urls" ? exports.paths.list : exports.paths.archived;
+  fs.readFile(filePath, function(err, data){
     if(err){
       console.log("ERROR: Could not read file");
     } else{
@@ -38,10 +40,12 @@ exports.readListOfUrls = function(listType, callback){ // TODO: implment list ty
   });
 };
 
-exports.isUrlInList = function(url, listType){
+exports.isUrlInList = function(url, listType, callback){
   exports.readListOfUrls(listType, function(list) {
     console.log('Is '+ url + " in " + list + "? " + _.contains(list, url));
-    return _.contains(list, url);
+    if(_.contains(list, url)){
+      callback();
+    }
   });
 };
 
@@ -49,8 +53,8 @@ exports.addUrlToList = function(url, listType){
 
 };
 
-exports.isUrlArchived = function(url){
-  return exports.isUrlInList(url, "archived");
+exports.isUrlArchived = function(url, callback){
+  exports.isUrlInList(url, "archived", callback);
 };
 
 exports.downloadUrls = function(){

@@ -15,16 +15,17 @@ var actions = {
       url+=chunk;
     }).on("end", function(){
       url = url.substring(4);
-      if (archive.isUrlInList(url)) {
-        if (archive.isUrlArchived(url)) {
+      archive.isUrlArchived(url, function(){
+          console.log(url + " is archived");
           httpHelpers.getAssets(res, 'archive', url);
-        } else {
-          httpHelpers.getAssets(res, 'static', '/loading.html');
-        }
-      } else {
-        archive.addUrlToList(url, 'urls');
-        console.log("Success! " + url + " has been submitted for archiving.")
-      }
+      });
+      // } else if (archive.isUrlInList(url, "urls")) {
+      //     httpHelpers.getAssets(res, 'static', '/loading.html');
+
+      // } else {
+      //   archive.addUrlToList(url, 'urls');
+      //   console.log("Success! " + url + " has been submitted for archiving.")
+      // }
       // check if url in list
         // if yes
           // if available serve
