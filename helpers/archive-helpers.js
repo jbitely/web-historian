@@ -25,7 +25,7 @@ exports.initialize = function(pathsObj){
 // The following function names are provided to you to suggest how you might
 // modularize your code. Keep it clean!
 
-exports.readListOfUrls = function(listType){
+exports.readListOfUrls = function(listType, callback){ // TODO: implment list type checking
   var list = "";
   fs.readFile(exports.paths.list, function(err, data){
     if(err){
@@ -33,18 +33,24 @@ exports.readListOfUrls = function(listType){
     } else{
       list = data.toString();
       list = list.split("\n");
-      return list;
+      callback(list);
     }
   });
 };
 
-exports.isUrlInList = function(url, list){
+exports.isUrlInList = function(url, listType){
+  exports.readListOfUrls(listType, function(list) {
+    console.log('Is '+ url + " in " + list + "? " + _.contains(list, url));
+    return _.contains(list, url);
+  });
 };
 
 exports.addUrlToList = function(url, listType){
+
 };
 
 exports.isUrlArchived = function(url){
+  return exports.isUrlInList(url, "archived");
 };
 
 exports.downloadUrls = function(){

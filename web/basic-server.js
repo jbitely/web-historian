@@ -28,7 +28,7 @@ var port = 8080;
 var ip = "127.0.0.1";
 var server = http.createServer(function(req, res) {
   var parts = urlParser.parse(req.url);
-  console.dir(parts);
+  //console.dir(parts);
   var path = urlParser.parse(req.url).pathname; // should be all the parts?
   var route = routes[path];
   if (route) {

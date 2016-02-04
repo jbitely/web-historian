@@ -14,9 +14,8 @@ var actions = {
     req.on("data", function(chunk){
       url+=chunk;
     }).on("end", function(){
-      var list = archive.readListOfUrls('urls'); // obj { 'url': true (archived) or false (not archived)}
-      if (archive.isUrlInList(url, list)) {
-        var archiveList = archive.readListOfUrls('archived');
+      url = url.substring(4);
+      if (archive.isUrlInList(url)) {
         if (archive.isUrlArchived(url)) {
           httpHelpers.getAssets(res, 'archive', url);
         } else {
