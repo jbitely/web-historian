@@ -17,7 +17,7 @@ var actions = {
       var list = archive.readListOfUrls('urls'); // obj { 'url': true (archived) or false (not archived)}
       if (archive.isUrlInList(url, list)) {
         var archiveList = archive.readListOfUrls('archived');
-        if (archive.isUrlArchived(url, archiveList)) {
+        if (archive.isUrlArchived(url)) {
           httpHelpers.getAssets(res, 'archive', url);
         } else {
           httpHelpers.getAssets(res, 'static', '/loading.html');
