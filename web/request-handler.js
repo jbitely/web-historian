@@ -1,6 +1,7 @@
 var path = require('path');
 var archive = require('../helpers/archive-helpers');
 var httpHelpers = require('./http-helpers');
+
 // require more modules/folders here!
 
 var actions = {
@@ -25,7 +26,6 @@ exports.handleRequest = function (req, res) {
     console.log("Whoops! There's an error.");
     res.end();
   }
-
 
   res.end(archive.paths.list);
 };

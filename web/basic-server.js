@@ -1,14 +1,38 @@
 var http = require("http");
 var handler = require("./request-handler");
 var initialize = require("./initialize.js");
+var urlParser = require("url");
+var httpHelpers = require('./http-helpers');
+var archive = require('../helpers/archive-helpers');
+
 
 // Why do you think we have this here?
 // HINT: It has to do with what's in .gitignore
+// handler.handleRequest
+
 initialize();
+
+var routes = {
+  '/': function(req, res) {
+    var asset = archive.paths.siteAssets + "/index.html";// path join /index.html
+    httpHelpers.serveAssets(res, asset, function(){
+      // callback
+    });
+  }
+};
 
 var port = 8080;
 var ip = "127.0.0.1";
-var server = http.createServer(handler.handleRequest);
+var server = http.createServer(function(req, res) {
+  var path = urlParser.parse(req.url).pathname; // should be all the parts?
+  var route = routes[path];
+  if (route) {
+    route(req, res);
+  } else {
+    // Error!
+  }
+
+});
 
 if (module.parent) {
   module.exports = server;
