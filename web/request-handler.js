@@ -10,7 +10,29 @@ var actions = {
     res.end();
   },
   'POST': function(req, res) {
-
+    var url = "";
+    req.on("data", function(chunk){
+      url+=chunk;
+    }).on("end", function(){
+      var list = archive.readListOfUrls('urls'); // obj { 'url': true (archived) or false (not archived)}
+      if (archive.isUrlInList(url, list)) {
+        var archiveList = archive.readListOfUrls('archived');
+        if (archive.isUrlArchived(url, archiveList)) {
+          httpHelpers.getAssets(res, 'archive', url);
+        } else {
+          httpHelpers.getAssets(res, 'static', '/loading.html');
+        }
+      } else {
+        archive.addUrlToList(url, 'urls');
+        console.log("Success! " + url + " has been submitted for archiving.")
+      }
+      // check if url in list
+        // if yes
+          // if available serve
+          // else serve loading
+        // if no write to list
+          // tell user request made
+    });
   },
   'OPTIONS': function(req, res) {
 

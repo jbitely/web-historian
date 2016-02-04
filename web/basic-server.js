@@ -20,7 +20,7 @@ var routes = {
     httpHelpers.getAssets(res, 'static', '/styles.css');
   },
   '/archive': function(req, res) {
-    console.log('WOOHOO');
+    httpHelpers.requestHandler(req, res);
   }
 };
 
